@@ -31,6 +31,56 @@ Consulte o documento [README](../README.md#pré-requisitos) para preparação.
 1. Selecione o modelo como `GPT-4.1` ou `Claude Sonnet 4`.
 1. Certifique-se de ter configurado [Servidores MCP](./00-setup.md#configurar-servidores-mcp).
 
+## Iniciar Servidores MCP &ndash; Awesome Copilot
+
+1. Abra a Paleta de Comandos digitando `F1` ou `Ctrl`+`Shift`+`P` no Windows ou `Cmd`+`Shift`+`P` no Mac OS, e pesquise `MCP: List Servers`.
+1. Pare os servidores MCP `github` e `monkeymcp` se ainda estiverem em execução.
+1. Escolha `awesome-copilot` e clique em `Start Server`.
+
+## Configurar Modo Beast
+
+1. Digite o seguinte prompt para pesquisar o prompt do modo beast.
+
+    ```text
+    Show me the list of copilot instructions for beast chatmode. It should be general purpose.
+    ```
+
+   Deve retornar um resultado semelhante a `4.1 Beast Chat Mode`. Caso contrário, pesquise novamente.
+
+1. Digite o seguinte prompt para salvar o modo de chat beast.
+
+    ```text
+    Save it under the `.github/chatmodes` directory.
+    ```
+
+1. Escolha o modo `4.1-Beast` em vez do modo `Agent`. Ele mudará automaticamente o LLM para `GPT 4.1`.
+
+1. Defina a variável de ambiente `$REPOSITORY_ROOT`.
+
+   ```bash
+   # bash/zsh
+   REPOSITORY_ROOT=$(git rev-parse --show-toplevel)
+   ```
+
+   ```powershell
+   # PowerShell
+   $REPOSITORY_ROOT = git rev-parse --show-toplevel
+   ```
+
+1. Copie as configurações do espaço de trabalho.
+
+    ```bash
+    # bash/zsh
+    cp $REPOSITORY_ROOT/docs/.vscode/settings.json \
+       $REPOSITORY_ROOT/.vscode/settings.json
+    ```
+
+    ```powershell
+    # PowerShell
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.vscode/settings.json `
+              -Destination $REPOSITORY_ROOT/.vscode/settings.json -Force
+    ```
+
 ## Preparar Instruções Personalizadas
 
 1. Defina a variável de ambiente `$REPOSITORY_ROOT`.
@@ -49,14 +99,14 @@ Consulte o documento [README](../README.md#pré-requisitos) para preparação.
 
     ```bash
     # bash/zsh
-    cp -r $REPOSITORY_ROOT/docs/.github/. \
-          $REPOSITORY_ROOT/.github/
+    cp $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md \
+       $REPOSITORY_ROOT/.github/copilot-instructions.md
     ```
 
     ```powershell
     # PowerShell
-    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/* `
-              -Destination $REPOSITORY_ROOT/.github/ -Recurse -Force
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md `
+              -Destination $REPOSITORY_ROOT/.github/copilot-instructions.md -Force
     ```
 
 ## Preparar Desenvolvimento do Servidor MCP
@@ -94,13 +144,12 @@ No diretório `start`, uma aplicação ASP.NET Core Minimal API já está estrut
 ## Desenvolver Lógica de Gerenciamento de Lista de Tarefas
 
 1. Certifique-se de estar usando o Modo Agente do GitHub Copilot com o modelo `Claude Sonnet 4` ou `GPT-4.1`.
-1. Certifique-se de que o servidor MCP `context7` esteja em execução.
+1. Certifique-se de que os servidores MCP `microsoft.docs.mcp` e `sequentialthinking` estejam em execução.
 1. Use o prompt como abaixo para implementar a lógica de gerenciamento de lista de tarefas.
 
     ```text
     Gostaria de implementar uma lógica de gerenciamento de lista de tarefas na aplicação ASP.NET Core Minimal API. Siga as instruções abaixo para o desenvolvimento da aplicação.
     
-    - Use context7.
     - Identifique primeiro todos os passos que você vai fazer.
     - Seu diretório de trabalho é `workshop/src/McpTodoServer.ContainerApp`.
     - Use SQLite como banco de dados e deve usar o recurso em memória.
@@ -121,7 +170,6 @@ No diretório `start`, uma aplicação ASP.NET Core Minimal API já está estrut
     ```text
     Gostaria de construir a aplicação. Siga as instruções.
 
-    - Use context7.
     - Construa a aplicação e verifique se ela constrói corretamente.
     - Se a construção falhar, analise os problemas e corrija-os.
     ```
@@ -137,7 +185,6 @@ No diretório `start`, uma aplicação ASP.NET Core Minimal API já está estrut
     ```text
     Gostaria de adicionar a classe `TodoTool` à aplicação. Siga as instruções.
 
-    - Use context7.
     - Identifique primeiro todos os passos que você vai fazer.
     - Seu diretório de trabalho é `workshop/src/McpTodoServer.ContainerApp`.
     - A classe `TodoTool` deve conter 5 métodos - criar, listar, atualizar, completar e excluir.
@@ -364,16 +411,10 @@ No diretório `start`, uma aplicação ASP.NET Core Minimal API já está estrut
     ```jsonc
     {
       "servers": {
-        "context7": {
-          "command": "npx",
-          "args": [
-            "-y",
-            "@upstash/context7-mcp"
-          ]
-        },
+        ...
         // 👇👇👇 Adicionado 👇👇👇
         "mcp-todo": {
-            "url": "http://localhost:5242/mcp"
+          "url": "http://localhost:5242/mcp"
         }
         // 👆👆👆 Adicionado 👆👆👆
       }

@@ -31,6 +31,56 @@
 1. 选择模型为 `GPT-4.1` 或 `Claude Sonnet 4`。
 1. 确保您已配置 [MCP 服务器](./00-setup.md#设置-mcp-服务器)。
 
+## 启动 MCP 服务器 &ndash; Awesome Copilot
+
+1. 通过在 Windows 上按 `F1` 或 `Ctrl`+`Shift`+`P`，或在 Mac OS 上按 `Cmd`+`Shift`+`P` 打开命令面板，并搜索 `MCP: List Servers`。
+1. 如果 `github` 和 `monkeymcp` MCP 服务器仍在运行，请停止它们。
+1. 选择 `awesome-copilot` 然后点击 `Start Server`。
+
+## 配置 Beast 模式
+
+1. 输入以下提示来搜索 beast 模式提示。
+
+    ```text
+    Show me the list of copilot instructions for beast chatmode. It should be general purpose.
+    ```
+
+   应该返回类似于 `4.1 Beast Chat Mode` 的结果。如果不是，请再次搜索。
+
+1. 输入以下提示来保存 beast 聊天模式。
+
+    ```text
+    Save it under the `.github/chatmodes` directory.
+    ```
+
+1. 选择 `4.1-Beast` 模式而不是 `Agent` 模式。它将自动将 LLM 更改为 `GPT 4.1`。
+
+1. 设置环境变量 `$REPOSITORY_ROOT`。
+
+   ```bash
+   # bash/zsh
+   REPOSITORY_ROOT=$(git rev-parse --show-toplevel)
+   ```
+
+   ```powershell
+   # PowerShell
+   $REPOSITORY_ROOT = git rev-parse --show-toplevel
+   ```
+
+1. 复制工作区设置。
+
+    ```bash
+    # bash/zsh
+    cp $REPOSITORY_ROOT/docs/.vscode/settings.json \
+       $REPOSITORY_ROOT/.vscode/settings.json
+    ```
+
+    ```powershell
+    # PowerShell
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.vscode/settings.json `
+              -Destination $REPOSITORY_ROOT/.vscode/settings.json -Force
+    ```
+
 ## 准备自定义指令
 
 1. 设置环境变量 `$REPOSITORY_ROOT`。
@@ -49,14 +99,14 @@
 
     ```bash
     # bash/zsh
-    cp -r $REPOSITORY_ROOT/docs/.github/. \
-          $REPOSITORY_ROOT/.github/
+    cp $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md \
+       $REPOSITORY_ROOT/.github/copilot-instructions.md
     ```
 
     ```powershell
     # PowerShell
-    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/* `
-              -Destination $REPOSITORY_ROOT/.github/ -Recurse -Force
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md `
+              -Destination $REPOSITORY_ROOT/.github/copilot-instructions.md -Force
     ```
 
 ## 准备 MCP 服务器开发
@@ -94,13 +144,12 @@
 ## 开发待办事项列表管理逻辑
 
 1. 确保您正在使用 GitHub Copilot 代理模式，模型为 `Claude Sonnet 4` 或 `GPT-4.1`。
-1. 确保 `context7` MCP 服务器正在运行。
+1. 确保 `microsoft.docs.mcp` 和 `sequentialthinking` MCP 服务器都在运行。
 1. 使用如下提示来实现待办事项列表管理逻辑。
 
     ```text
     我想在 ASP.NET Core Minimal API 应用程序中实现待办事项列表管理逻辑。请按照以下应用程序开发指示操作。
     
-    - 使用 context7。
     - 首先识别您要执行的所有步骤。
     - 您的工作目录是 `workshop/src/McpTodoServer.ContainerApp`。
     - 使用 SQLite 作为数据库，并应使用内存功能。
@@ -121,7 +170,6 @@
     ```text
     我想构建应用程序。按照指示操作。
 
-    - 使用 context7。
     - 构建应用程序并验证其是否正确构建。
     - 如果构建失败，分析问题并修复它们。
     ```
@@ -137,7 +185,6 @@
     ```text
     我想向应用程序添加 `TodoTool` 类。按照指示操作。
 
-    - 使用 context7。
     - 首先识别您要执行的所有步骤。
     - 您的工作目录是 `workshop/src/McpTodoServer.ContainerApp`。
     - `TodoTool` 类应包含 5 个方法 - 创建、列表、更新、完成和删除。
@@ -364,16 +411,10 @@
     ```jsonc
     {
       "servers": {
-        "context7": {
-          "command": "npx",
-          "args": [
-            "-y",
-            "@upstash/context7-mcp"
-          ]
-        },
+        ...
         // 👇👇👇 已添加 👇👇👇
         "mcp-todo": {
-            "url": "http://localhost:5242/mcp"
+          "url": "http://localhost:5242/mcp"
         }
         // 👆👆👆 已添加 👆👆👆
       }

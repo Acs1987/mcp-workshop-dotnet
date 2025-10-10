@@ -31,6 +31,56 @@
 1. 모델을 `GPT-4.1` 또는 `Claude Sonnet 4`로 선택합니다.
 1. [MCP 서버](./00-setup.md#mcp-서버-설정)를 구성했는지 확인하세요.
 
+## MCP 서버 시작 &ndash; Awesome Copilot
+
+1. Windows에서는 `F1` 또는 `Ctrl`+`Shift`+`P`를 입력하고, Mac OS에서는 `Cmd`+`Shift`+`P`를 입력하여 명령 팔레트를 열고 `MCP: List Servers`를 검색합니다.
+1. `github` 및 `monkeymcp` MCP 서버가 여전히 실행 중인 경우 둘 다 중지합니다.
+1. `awesome-copilot`을 선택한 다음 `Start Server`를 클릭합니다.
+
+## Beast 모드 구성
+
+1. 다음 프롬프트를 입력하여 beast 모드 프롬프트를 검색합니다.
+
+    ```text
+    Show me the list of copilot instructions for beast chatmode. It should be general purpose.
+    ```
+
+   `4.1 Beast Chat Mode`와 유사한 결과가 반환되어야 합니다. 그렇지 않은 경우 다시 검색하세요.
+
+1. 다음 프롬프트를 입력하여 beast 채팅 모드를 저장합니다.
+
+    ```text
+    Save it under the `.github/chatmodes` directory.
+    ```
+
+1. `Agent` 모드 대신 `4.1-Beast` 모드를 선택합니다. LLM이 자동으로 `GPT 4.1`로 변경됩니다.
+
+1. `$REPOSITORY_ROOT` 환경 변수를 설정합니다.
+
+   ```bash
+   # bash/zsh
+   REPOSITORY_ROOT=$(git rev-parse --show-toplevel)
+   ```
+
+   ```powershell
+   # PowerShell
+   $REPOSITORY_ROOT = git rev-parse --show-toplevel
+   ```
+
+1. 작업 영역 설정을 복사합니다.
+
+    ```bash
+    # bash/zsh
+    cp $REPOSITORY_ROOT/docs/.vscode/settings.json \
+       $REPOSITORY_ROOT/.vscode/settings.json
+    ```
+
+    ```powershell
+    # PowerShell
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.vscode/settings.json `
+              -Destination $REPOSITORY_ROOT/.vscode/settings.json -Force
+    ```
+
 ## 사용자 정의 지침 준비
 
 1. `$REPOSITORY_ROOT` 환경 변수를 설정합니다.
@@ -49,14 +99,14 @@
 
     ```bash
     # bash/zsh
-    cp -r $REPOSITORY_ROOT/docs/.github/. \
-          $REPOSITORY_ROOT/.github/
+    cp $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md \
+       $REPOSITORY_ROOT/.github/copilot-instructions.md
     ```
 
     ```powershell
     # PowerShell
-    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/* `
-              -Destination $REPOSITORY_ROOT/.github/ -Recurse -Force
+    Copy-Item -Path $REPOSITORY_ROOT/docs/.github/todoapp-instructions.md `
+              -Destination $REPOSITORY_ROOT/.github/copilot-instructions.md -Force
     ```
 
 ## MCP 서버 개발 준비
@@ -94,13 +144,12 @@
 ## 할 일 목록 관리 로직 개발
 
 1. `Claude Sonnet 4` 또는 `GPT-4.1` 모델로 GitHub Copilot 에이전트 모드를 사용하고 있는지 확인하세요.
-1. `context7` MCP 서버가 실행 중인지 확인하세요.
+1. `microsoft.docs.mcp` 및 `sequentialthinking` MCP 서버가 모두 실행 중인지 확인하세요.
 1. 다음과 같은 프롬프트를 사용하여 할 일 목록 관리 로직을 구현합니다.
 
     ```text
     ASP.NET Core Minimal API 애플리케이션에서 할 일 목록 관리 로직을 구현하고 싶습니다. 애플리케이션 개발을 위해 아래 지침을 따르세요.
     
-    - context7을 사용하세요.
     - 먼저 수행할 모든 단계를 식별하세요.
     - 작업 디렉토리는 `workshop/src/McpTodoServer.ContainerApp`입니다.
     - 데이터베이스로 SQLite를 사용하고 메모리 내 기능을 사용해야 합니다.
@@ -121,7 +170,6 @@
     ```text
     애플리케이션을 빌드하고 싶습니다. 지침을 따르세요.
 
-    - context7을 사용하세요.
     - 애플리케이션을 빌드하고 제대로 빌드되는지 확인하세요.
     - 빌드가 실패하면 문제를 분석하고 수정하세요.
     ```
@@ -137,7 +185,6 @@
     ```text
     애플리케이션에 `TodoTool` 클래스를 추가하고 싶습니다. 지침을 따르세요.
 
-    - context7을 사용하세요.
     - 먼저 수행할 모든 단계를 식별하세요.
     - 작업 디렉토리는 `workshop/src/McpTodoServer.ContainerApp`입니다.
     - `TodoTool` 클래스에는 5개의 메서드가 포함되어야 합니다 - 생성, 목록, 업데이트, 완료, 삭제.
@@ -364,16 +411,10 @@
     ```jsonc
     {
       "servers": {
-        "context7": {
-          "command": "npx",
-          "args": [
-            "-y",
-            "@upstash/context7-mcp"
-          ]
-        },
+        ...
         // 👇👇👇 추가됨 👇👇👇
         "mcp-todo": {
-            "url": "http://localhost:5242/mcp"
+          "url": "http://localhost:5242/mcp"
         }
         // 👆👆👆 추가됨 👆👆👆
       }
