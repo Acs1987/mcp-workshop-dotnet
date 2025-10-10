@@ -83,7 +83,23 @@
     dotnet new console -n MyMonkeyApp
     ```
 
+1. 如果您愿意，可以运行控制台应用程序并查看结果。
+
+    ```bash
+    dotnet run --project $REPOSITORY_ROOT/workshop/MyMonkeyApp
+    ```
+
 ## 管理 GitHub 存储库
+
+1. 更新 `.gitignore` 以包含 `workshop` 目录。
+
+    ```text
+    ...
+    .github/copilot-instructions.md
+    .vscode/mcp.json
+    .vscode/settings.json
+    # workshop/
+    ```
 
 1. 向 GitHub Copilot 输入以下提示以推送创建的控制台应用程序。
 
@@ -117,7 +133,7 @@
 1. 输入以下提示以获取猴子列表。
 
     ```text
-    获取可用猴子的列表并在表格中显示它们的详细信息。
+    #monkeymcp 获取一份可用猴子的列表并把它们的详细信息显示在一个表格中。
     ```
 
 1. 输入以下提示以获得猴子数据模型的想法。
@@ -135,7 +151,7 @@
 1. 输入以下提示创建 `MonkeyHelper` 类。
 
     ```text
-    让我们创建一个名为 MonkeyHelper 的静态新类。它应该管理猴子数据的集合。包括获取所有猴子、获取随机猴子、按名称查找猴子以及跟踪选择随机猴子时的访问次数的方法。猴子的数据应该来自我们刚刚获得的 Monkey MCP 服务器。
+    让我们创建一个名为 `MonkeyHelper` 的静态新类。它应该管理猴子数据的集合。包括获取所有猴子、获取随机猴子、按名称查找猴子以及跟踪选择随机猴子时的访问次数的方法。猴子的数据应该来自我们刚刚获得的 Monkey MCP 服务器。
     ```
 
 1. 输入以下提示更新控制台应用程序。
@@ -154,11 +170,11 @@
 1. 向 GitHub Copilot 输入以下提示以推送更新的控制台应用程序。
 
     ```text
-    将当前更改推送到存储库的 `mymonkeyapp` 分支。
-    在推送更改之前，确保 `workshop` 目录包含在推送中。
-    使用此分支，针对你的存储库的 `main` 分支创建 PR，而不是上游存储库。
-    将此 PR 连接到之前创建的问题。
-    然后，合并此 PR 并关闭问题。
+    - 将当前更改推送到存储库的 `mymonkeyapp` 分支。
+    - 在推送更改之前，确保 `workshop` 目录包含在推送中。
+    - 使用此分支，针对你的存储库的 `main` 分支创建 PR，而不是上游存储库。
+    - 将此 PR 连接到之前创建的问题。
+    - 然后，合并此 PR 并关闭问题。
     ```
 
 ---

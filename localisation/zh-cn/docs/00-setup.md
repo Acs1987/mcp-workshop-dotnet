@@ -41,6 +41,11 @@
     pwsh --version
     ```
 
+    ```bash
+    # Docker
+    docker info
+    ```
+
 1. 检查您的存储库状态。
 
     ```bash
@@ -88,6 +93,8 @@
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (fetch)
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (push)
     ```
+
+1. 确保您 fork 的存储库具有可用的 "Issues" 选项卡。如果没有，请转到 "Settings" 👉 向下滚动到 "Features" 部分 👉 勾选 "Issues" 复选框。
 
 1. 转到 [设置 MCP 服务器](#设置-mcp-服务器) 部分。
 

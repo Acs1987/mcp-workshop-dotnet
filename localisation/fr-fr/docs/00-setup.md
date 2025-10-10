@@ -41,6 +41,11 @@ Référez-vous au document [README](../README.md#prérequis) pour la préparatio
     pwsh --version
     ```
 
+    ```bash
+    # Docker
+    docker info
+    ```
+
 1. Vérifiez le statut de votre dépôt.
 
     ```bash
@@ -88,6 +93,8 @@ Référez-vous au document [README](../README.md#prérequis) pour la préparatio
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (fetch)
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (push)
     ```
+
+1. Assurez-vous que votre dépôt forké dispose de l'onglet "Issues" disponible. Si ce n'est pas le cas, allez dans "Settings" 👉 faites défiler jusqu'à la section "Features" 👉 cochez la case "Issues".
 
 1. Descendez à la section [Configurer les Serveurs MCP](#configurer-les-serveurs-mcp).
 

@@ -83,7 +83,23 @@ Consulta el documento [README](../README.md#requisitos-previos) para la preparac
     dotnet new console -n MyMonkeyApp
     ```
 
+1. Si lo deseas, puedes ejecutar la aplicación de consola y ver el resultado.
+
+    ```bash
+    dotnet run --project $REPOSITORY_ROOT/workshop/MyMonkeyApp
+    ```
+
 ## Gestionar Repositorio de GitHub
+
+1. Actualiza `.gitignore` para incluir el directorio `workshop`.
+
+    ```text
+    ...
+    .github/copilot-instructions.md
+    .vscode/mcp.json
+    .vscode/settings.json
+    # workshop/
+    ```
 
 1. Ingresa el siguiente prompt a GitHub Copilot para subir la aplicación de consola creada.
 
@@ -117,7 +133,7 @@ Consulta el documento [README](../README.md#requisitos-previos) para la preparac
 1. Ingresa el siguiente prompt para obtener la lista de monos.
 
     ```text
-    Obtén una lista de monos que estén disponibles y muéstralos en una tabla con sus detalles.
+    #monkeymcp Consígueme una lista de monos disponibles y muéstralos en una tabla con sus detalles.
     ```
 
 1. Ingresa el siguiente prompt para obtener una idea del modelo de datos para un mono.
@@ -135,7 +151,7 @@ Consulta el documento [README](../README.md#requisitos-previos) para la preparac
 1. Ingresa el siguiente prompt para crear una clase `MonkeyHelper`.
 
     ```text
-    Creemos una nueva clase llamada MonkeyHelper que sea estática. Debe gestionar una colección de datos de monos. Incluye métodos para obtener todos los monos, obtener un mono aleatorio, encontrar un mono por nombre, y rastrear el recuento de acceso cuando se elige un mono aleatorio. Los datos de los monos deben provenir del servidor Monkey MCP que acabamos de obtener.
+    Creemos una nueva clase llamada `MonkeyHelper` que sea estática. Debe gestionar una colección de datos de monos. Incluye métodos para obtener todos los monos, obtener un mono aleatorio, encontrar un mono por nombre, y rastrear el recuento de acceso cuando se elige un mono aleatorio. Los datos de los monos deben provenir del servidor Monkey MCP que acabamos de obtener.
     ```
 
 1. Ingresa el siguiente prompt para actualizar la aplicación de consola.
@@ -154,11 +170,11 @@ Consulta el documento [README](../README.md#requisitos-previos) para la preparac
 1. Ingresa el siguiente prompt a GitHub Copilot para subir la aplicación de consola actualizada.
 
     ```text
-    Empuja los cambios actuales a la rama `mymonkeyapp` del repositorio.
-    Antes de enviar los cambios, asegúrate de que el directorio `workshop` esté incluido en el push.
-    Con esta rama, crea una PR contra la rama `main` de tu repositorio, no del upstream.
-    Conecta esta PR al issue creado anteriormente.
-    Luego, fusiona esta PR y cierra el issue.
+    - Empuja los cambios actuales a la rama `mymonkeyapp` del repositorio.
+    - Antes de enviar los cambios, asegúrate de que el directorio `workshop` esté incluido en el push.
+    - Con esta rama, crea una PR contra la rama `main` de tu repositorio, no del upstream.
+    - Conecta esta PR al issue creado anteriormente.
+    - Luego, fusiona esta PR y cierra el issue.
     ```
 
 ---

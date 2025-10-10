@@ -41,6 +41,11 @@
     pwsh --version
     ```
 
+    ```bash
+    # Docker
+    docker info
+    ```
+
 1. リポジトリのステータスを確認します。
 
     ```bash
@@ -88,6 +93,8 @@
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (fetch)
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (push)
     ```
+
+1. フォークしたリポジトリに "Issues" タブが有効になっていることを確認してください。有効でない場合は、"Settings" 👉 "Features" セクションまでスクロール 👉 "Issues" チェックボックスをオンにしてください。
 
 1. [MCPサーバーをセットアップ](#mcpサーバーをセットアップ)セクションに進んでください。
 

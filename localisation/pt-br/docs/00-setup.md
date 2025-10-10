@@ -41,6 +41,11 @@ Consulte o documento [README](../README.md#pré-requisitos) para preparação.
     pwsh --version
     ```
 
+    ```bash
+    # Docker
+    docker info
+    ```
+
 1. Verifique o status do seu repositório.
 
     ```bash
@@ -88,6 +93,8 @@ Consulte o documento [README](../README.md#pré-requisitos) para preparação.
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (fetch)
     upstream        https://github.com/Azure-Samples/mcp-workshop-dotnet (push)
     ```
+
+1. Certifique-se de que o repositório que você bifurcou tenha a aba "Issues" disponível. Se não estiver, vá para "Settings" 👉 role para baixo até a seção "Features" 👉 marque a caixa de seleção "Issues".
 
 1. Vá para a seção [Configurar Servidores MCP](#configurar-servidores-mcp).
 
